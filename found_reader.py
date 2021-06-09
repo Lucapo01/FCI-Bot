@@ -1,4 +1,3 @@
-#test
 from mylib.func import _getDataM_, _loadParameters_,_writeExcel_,_getDataY_
 import requests
 from bs4 import BeautifulSoup
