@@ -7,7 +7,6 @@ from time import sleep
 def _getDataM_ (url,driver,time):
 
 
-
     driver.get(url)
     sleep(time/1.5)
     driver.find_element_by_class_name("html").click()
@@ -110,9 +109,9 @@ def _getDataY_ (url,driver,time):
     driver.switch_to.window(driver.window_handles[0])
     return (Patrimonio,YPF)
 
-def _loadParameters_():
+def _loadParameters_(url,driver):
 
-    
+    driver.get(url)
 
     while True:
         
@@ -125,6 +124,8 @@ def _loadParameters_():
             break
         except:
             print("Revise los formatos de lo que ingreso")
+
+    
     
    
     return (COT,time,choice,fecha)

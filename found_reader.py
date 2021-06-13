@@ -3,11 +3,11 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from time import sleep
-
-
-COT , time, choice, fecha = _loadParameters_()
 driver = webdriver.Firefox()
 sleep(3)
+
+COT , time, choice, fecha = _loadParameters_("https://www.cafci.org.ar/ficha-fondo.html?q=41;41",driver)
+
 
 # formato: "fondo", "url", $patrimonio, %mirg, $mirg
 fondos = [
@@ -41,6 +41,8 @@ if choice == 1:
 elif choice == 2:
     for fondo in fondos:
         fondo[2],fondo[3] = _getDataY_(fondo[1],driver,time)
+
+
 
 else:
     print("Error en choice")
