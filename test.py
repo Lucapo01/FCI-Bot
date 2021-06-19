@@ -3,7 +3,9 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from time import sleep
+
 driver = webdriver.Firefox()
+
 
 time = 8
 url = "https://www.cafci.org.ar/ficha-fondo.html?q=41;41"

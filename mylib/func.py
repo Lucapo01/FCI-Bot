@@ -111,7 +111,7 @@ def _getDataY_ (url,driver,time):
 
 def _loadParameters_(url,driver):
 
-    driver.get(url)
+    #driver.get(url)
 
     while True:
         
