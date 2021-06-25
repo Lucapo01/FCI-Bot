@@ -7,6 +7,7 @@ from time import sleep
 def _getDataM_ (url,driver,time):
 
 
+
     driver.get(url)
     sleep(time/1.5)
     driver.find_element_by_class_name("html").click()
@@ -109,9 +110,9 @@ def _getDataY_ (url,driver,time):
     driver.switch_to.window(driver.window_handles[0])
     return (Patrimonio,YPF)
 
-def _loadParameters_(url,driver):
+def _loadParameters_():
 
-    #driver.get(url)
+    
 
     while True:
         
@@ -124,13 +125,44 @@ def _loadParameters_(url,driver):
             break
         except:
             print("Revise los formatos de lo que ingreso")
-
-    
     
    
     return (COT,time,choice,fecha)
 
 def _writeExcel_(fondos,choice,fecha):
+    import xlsxwriter
+    
+    if choice == 1:
+        outWorkbook = xlsxwriter.Workbook("outMirg.xlsx")
+        outSheet = outWorkbook.add_worksheet()
+
+        outSheet.write("A2", "Fondos")
+        outSheet.write("C2", "Cant. Mirg")
+        outSheet.write("B1", fecha)
+
+        for item in range(len(fondos)):
+            outSheet.write(item+2, 0, fondos[item][0])
+            outSheet.write(item+2, 2, fondos[item][4])
+    
+
+    elif choice == 2:
+        outWorkbook = xlsxwriter.Workbook("outYPF.xlsx")
+        outSheet = outWorkbook.add_worksheet()
+
+        outSheet.write("A2", "Fondos")
+        outSheet.write("C2", "Cant. YPF")
+        outSheet.write("B1", fecha)
+
+        for item in range(len(fondos)):
+            outSheet.write(item+2, 0, fondos[item][0])
+            outSheet.write(item+2, 2, fondos[item][4])
+    
+    else:
+        print("Error en choice")
+        exit()
+
+
+    outWorkbook.close()
     import xlsxwriter
     
     if choice == 1:
