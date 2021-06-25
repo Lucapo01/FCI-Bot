@@ -112,7 +112,35 @@ def _getDataY_ (url,driver,time):
 
 def _loadParameters_():
 
+    driver = webdriver.Firefox()
+    time = 8
+    url_date = "https://www.cafci.org.ar/ficha-fondo.html?q=41;41"
+
+    driver.get(url_date)
+    sleep(time/1.5)
+    driver.find_element_by_class_name("html").click()
+    sleep(time/1.5)
+    driver.switch_to.window(driver.window_handles[1])
+    sleep(time/1.5)
     
+        
+    html = driver.execute_script("return document.documentElement.outerHTML")
+    sel_soup = BeautifulSoup(html, "html.parser")
+
+    datos_crudos = sel_soup.findAll("p")
+    datos_crudos = str(datos_crudos)
+
+    posStart = datos_crudos.find("""<p class="encuentreColortxt ng-binding">1822 Raices Valores Negociables<br/>Composición de Cartera al """)
+    tamañoStart = len("""<p class="encuentreColortxt ng-binding">1822 Raices Valores Negociables<br/>Composición de Cartera al""") 
+    posEnd = datos_crudos.find(""" </p>, <p class="destacado ng-binding">ARS 1000</p>, <p class="destacado ng-binding">48 hs. hábiles</p>""")
+    fecha = datos_crudos[posStart+tamañoStart:posEnd]
+
+    driver.close()
+    sleep(1)
+    driver.switch_to.window(driver.window_handles[0])
+    driver.close()
+
+    print("La fecha a analizar es: ",fecha)
 
     while True:
         
@@ -121,7 +149,6 @@ def _loadParameters_():
             choice = int(input("Ingrese\n 1 --> MIRG\n 2 --> YPF\n Su eleccion: "))
             COT = float(input("Ingrese la cotizacion del Activo en el periodo a analizar (999.99): "))
             time = float(input("Ingrese la velocidad de funcionamiento, recomendable 8.0 (sg.ms): "))
-            fecha = input("Ingrese fecha a analizar: ")
             break
         except:
             print("Revise los formatos de lo que ingreso")

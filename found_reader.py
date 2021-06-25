@@ -9,6 +9,7 @@ COT , time, choice, fecha = _loadParameters_()
 driver = webdriver.Firefox()
 sleep(3)
 
+
 # formato: "fondo", "url", $patrimonio, %mirg, $mirg
 fondos = [
 

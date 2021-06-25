@@ -8,9 +8,9 @@ driver = webdriver.Firefox()
 
 
 time = 8
-url = "https://www.cafci.org.ar/ficha-fondo.html?q=41;41"
+url_date = "https://www.cafci.org.ar/ficha-fondo.html?q=41;41"
 
-driver.get(url)
+driver.get(url_date)
 sleep(time/1.5)
 driver.find_element_by_class_name("html").click()
 sleep(time/1.5)
@@ -28,4 +28,5 @@ posStart = datos_crudos.find("""<p class="encuentreColortxt ng-binding">1822 Rai
 tamañoStart = len("""<p class="encuentreColortxt ng-binding">1822 Raices Valores Negociables<br/>Composición de Cartera al""") 
 posEnd = datos_crudos.find(""" </p>, <p class="destacado ng-binding">ARS 1000</p>, <p class="destacado ng-binding">48 hs. hábiles</p>""")
 fecha = datos_crudos[posStart+tamañoStart:posEnd]
+
 print(fecha)
