@@ -113,7 +113,7 @@ def _getDataY_ (url,driver,time):
 def _loadParameters_():
 
     driver = webdriver.Firefox()
-    time = 8
+    time = 15
     url_date = "https://www.cafci.org.ar/ficha-fondo.html?q=41;41"
 
     driver.get(url_date)
