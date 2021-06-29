@@ -5,7 +5,7 @@ from selenium import webdriver
 from time import sleep
 
 
-COT , time, choice, fecha = _loadParameters_()
+COT , time, choice, fecha = _loadParameters_() 
 driver = webdriver.Firefox()
 sleep(3)
 
