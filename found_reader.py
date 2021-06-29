@@ -1,14 +1,8 @@
-from mylib.func import _getDataM_, _loadParameters_,_writeExcel_,_getDataY_
+from mylib.func import FCI_Bot
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from time import sleep
-
-
-COT , time, choice, fecha = _loadParameters_() 
-driver = webdriver.Firefox()
-sleep(3)
-
 
 # formato: "fondo", "url", $patrimonio, %mirg, $mirg
 fondos = [
@@ -34,6 +28,8 @@ fondos = [
     ["Toronto Trust Multimercado", "https://www.cafci.org.ar/ficha-fondo.html?q=561;1135", -1,-1,-1],
     ["IAM Renta Variable", "https://www.cafci.org.ar/ficha-fondo.html?q=430;803", -1,-1,-1],
 ]
+
+url_date = "https://www.cafci.org.ar/ficha-fondo.html?q=41;41"
 
 if choice == 1:
     for fondo in fondos:
