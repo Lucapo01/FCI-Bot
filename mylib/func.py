@@ -2,31 +2,32 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from time import sleep
+import xlsxwriter
 
 class FCI_Bot:
 
-    def __init__(self,url,time,fondos):
+    def __init__(self,fondos,time):
 
-        driver = webdriver.Firefox()
+        self.driver = webdriver.Firefox()
         sleep(3)
 
-        self.url = url
-        self.driver = driver
+        
+        
         self.time = time
         self.fondos = fondos
         self.choice = 0
         self.fecha = "NaN"    
 
-    def _getDataM_ (self):
+    def _getDataM_ (self,url):
 
 
 
         self.driver.get(url)
-        sleep(self.time/1.5)
+        sleep(self.time)
         self.driver.find_element_by_class_name("html").click()
-        sleep(self.time/1.5)
-        self.driver.switch_to.window(driver.window_handles[1])
-        sleep(self.time/1.5)
+        sleep(self.time)
+        self.driver.switch_to.window(self.driver.window_handles[1])
+        sleep(self.time)
     
         
         html = self.driver.execute_script("return document.documentElement.outerHTML")
@@ -67,19 +68,20 @@ class FCI_Bot:
             Mirg = -1
 
         self.driver.close()
-        self.driver.switch_to.window(driver.window_handles[0])
+        self.driver.switch_to.window(self.driver.window_handles[0])
+
         return (Patrimonio,Mirg)
             
-    def _getDataY_ (self):
+    def _getDataY_ (self,url):
 
 
 
         self.driver.get(url)
-        sleep(self.time/1.5)
+        sleep(self.time)
         self.driver.find_element_by_class_name("html").click()
-        sleep(self.time/1.5)
-        self.driver.switch_to.window(driver.window_handles[1])
-        sleep(self.time/1.5)
+        sleep(self.time)
+        self.driver.switch_to.window(self.driver.window_handles[1])
+        sleep(self.time)
     
         
         html = self.driver.execute_script("return document.documentElement.outerHTML")
@@ -120,7 +122,7 @@ class FCI_Bot:
             YPF = -1
 
         self.driver.close()
-        self.driver.switch_to.window(driver.window_handles[0])
+        self.driver.switch_to.window(self.driver.window_handles[0])
         return (Patrimonio,YPF)
 
     def _loadParameters_(self,url):
@@ -129,7 +131,7 @@ class FCI_Bot:
         sleep(self.time*2)
         self.driver.find_element_by_class_name("html").click()
         sleep(self.time*2)
-        self.driver.switch_to.window(driver.window_handles[1])
+        self.driver.switch_to.window(self.driver.window_handles[1])
         sleep(self.time*2)
         
             
@@ -146,8 +148,8 @@ class FCI_Bot:
 
         self.driver.close()
         sleep(1)
-        self.driver.switch_to.window(driver.window_handles[0])
-        self.driver.close()
+        self.driver.switch_to.window(self.driver.window_handles[0])
+        
 
         print("La fecha a analizar es: ",self.fecha)
 
@@ -162,11 +164,7 @@ class FCI_Bot:
             except:
                 print("Revise los formatos de lo que ingreso")
         
-    
-        return (COT,time,choice,fecha)
-
     def _writeExcel_(self):
-        import xlsxwriter
     
         if self.choice == 1:
             outWorkbook = xlsxwriter.Workbook("outMirg.xlsx")

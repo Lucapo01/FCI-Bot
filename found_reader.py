@@ -27,30 +27,49 @@ fondos = [
     ["Pionero Acciones", "https://www.cafci.org.ar/ficha-fondo.html?q=39;39", -1,-1,-1],
     ["Toronto Trust Multimercado", "https://www.cafci.org.ar/ficha-fondo.html?q=561;1135", -1,-1,-1],
     ["IAM Renta Variable", "https://www.cafci.org.ar/ficha-fondo.html?q=430;803", -1,-1,-1],
+    ["Allaria Acciones", "https://www.cafci.org.ar/ficha-fondo.html?q=441;835", -1,-1,-1],
+    ["Premier Renta Variable", "https://www.cafci.org.ar/ficha-fondo.html?q=227;227", -1,-1,-1],
+
 ]
 
 url_date = "https://www.cafci.org.ar/ficha-fondo.html?q=41;41"
+start_time = 15
+errores = [0,]
 
-if choice == 1:
-    for fondo in fondos:
-        fondo[2],fondo[3] = _getDataM_(fondo[1],driver,time)
+FCI_Bot = FCI_Bot(fondos,start_time)
+FCI_Bot._loadParameters_(url_date)
 
-elif choice == 2:
-    for fondo in fondos:
-        fondo[2],fondo[3] = _getDataY_(fondo[1],driver,time)
+if FCI_Bot.choice == 1:
+    for fondo in FCI_Bot.fondos:
+        fondo[2],fondo[3] = FCI_Bot._getDataM_(fondo[1])
+
+elif FCI_Bot.choice == 2:
+    for fondo in FCI_Bot.fondos:
+        fondo[2],fondo[3] = FCI_Bot._getDataY_(fondo[1])
 
 else:
     print("Error en choice")
     exit()
 
+FCI_Bot.driver.close()
+
+for fondo in FCI_Bot.fondos:
+    fondo[4] = int(((fondo[3]/100)*fondo[2]) / FCI_Bot.COT)
 
 
-driver.close()
-
-for fondo in fondos:
-    fondo[4] = int(((fondo[3]/100)*fondo[2]) / COT)
-
-print(fondos)
+FCI_Bot._writeExcel_(fondos)
 
 
-_writeExcel_(fondos, choice, fecha)
+for fondo in FCI_Bot.fondos:
+    if -1 in fondo:
+        errores[0] = errores[0] + 1
+        errores.append(fondo[0])
+
+if errores[0] == 0:
+    print("Sin errores")
+
+else:
+    print("Hay {errores[0]} errores en los siguientes fondos: ")
+    for error in errores:
+        print(error)
+    
