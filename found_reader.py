@@ -1,14 +1,8 @@
-from mylib.func import _getDataM_, _loadParameters_,_writeExcel_,_getDataY_
+from mylib.func import FCI_Bot
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from time import sleep
-
-
-COT , time, choice, fecha = _loadParameters_() 
-driver = webdriver.Firefox()
-sleep(3)
-
 
 # formato: "fondo", "url", $patrimonio, %mirg, $mirg
 fondos = [
@@ -33,28 +27,63 @@ fondos = [
     ["Pionero Acciones", "https://www.cafci.org.ar/ficha-fondo.html?q=39;39", -1,-1,-1],
     ["Toronto Trust Multimercado", "https://www.cafci.org.ar/ficha-fondo.html?q=561;1135", -1,-1,-1],
     ["IAM Renta Variable", "https://www.cafci.org.ar/ficha-fondo.html?q=430;803", -1,-1,-1],
+    ["Allaria Acciones", "https://www.cafci.org.ar/ficha-fondo.html?q=441;835", -1,-1,-1],
+    ["Premier Renta Variable", "https://www.cafci.org.ar/ficha-fondo.html?q=227;227", -1,-1,-1],
+
 ]
 
-if choice == 1:
-    for fondo in fondos:
-        fondo[2],fondo[3] = _getDataM_(fondo[1],driver,time)
+#load parameters
 
-elif choice == 2:
-    for fondo in fondos:
-        fondo[2],fondo[3] = _getDataY_(fondo[1],driver,time)
+start_time = 15
+errores = [0,]
+
+FCI_Bot = FCI_Bot(fondos,start_time)
+FCI_Bot._loadParameters_(fondos[0][1])
+
+#Scrapping Websites
+
+if FCI_Bot.choice == 1:
+    for fondo in FCI_Bot.fondos:
+        fondo[2],fondo[3] = FCI_Bot._getDataM_(fondo[1])
+
+elif FCI_Bot.choice == 2:
+    for fondo in FCI_Bot.fondos:
+        fondo[2],fondo[3] = FCI_Bot._getDataY_(fondo[1])
+
+elif FCI_Bot.choice == 3:
+    for fondo in FCI_Bot.fondos:
+        fondo[2],fondo[3] = FCI_Bot._getDataV_(fondo[1])
 
 else:
     print("Error en choice")
     exit()
 
+FCI_Bot.driver.close()
+ 
+# Data Math
+
+for fondo in FCI_Bot.fondos:
+
+    if fondo[3] > 0:
+        fondo[4] = int(((fondo[3]/100)*fondo[2]) / FCI_Bot.COT)
+    else:
+        fondo[4] = -1
 
 
-driver.close()
+FCI_Bot._writeExcel_()
 
-for fondo in fondos:
-    fondo[4] = int(((fondo[3]/100)*fondo[2]) / COT)
+#error manager
+for fondo in FCI_Bot.fondos:
+    if fondo[3] < 0:
+        errores[0] = errores[0] + 1
+        errores.append(fondo[0])
 
-print(fondos)
+log_file = open("log.txt","w")
+if errores[0] == 0:
+    log_file.write("Sin errores")
 
-
-_writeExcel_(fondos, choice, fecha)
+else:
+    log_file.write("Hay " + str(errores[0])+ " errores en los siguientes fondos: ")
+    errores.pop(0)
+    log_file.writelines(errores)
+    

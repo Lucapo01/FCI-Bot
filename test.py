@@ -1,32 +1,34 @@
-from mylib.func import _getDataM_, _loadParameters_,_writeExcel_,_getDataY_
+from mylib.func import FCI_Bot
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from time import sleep
 
-driver = webdriver.Firefox()
+fondos = [
 
+    ["1822 Raices Valores Negociables", "https://www.cafci.org.ar/ficha-fondo.html?q=41;41", -1,-1,-1],
+    ["Alpha Acciones", "https://www.cafci.org.ar/ficha-fondo.html?q=35;35", -1,-1,-1 ],
+    ["Alpha Mega", "https://www.cafci.org.ar/ficha-fondo.html?q=36;381", -1,-1,-1],
+    ["Balanz", "https://www.cafci.org.ar/ficha-fondo.html?q=669;1400", -1,-1,-1],
+    ["Bull Market", "https://www.cafci.org.ar/ficha-fondo.html?q=847;2408", -1,-1,-1],
+    ["Consultatio Acciones Argentina", "https://www.cafci.org.ar/ficha-fondo.html?q=216;1208", -1,-1,-1],
+    ["Consultatio Renta Variable", "https://www.cafci.org.ar/ficha-fondo.html?q=514;1037", -1,-1,-1],
+    ["Fima Acciones", "https://www.cafci.org.ar/ficha-fondo.html?q=21;21", -1,-1,-1],
+    ["Fima PB Acciones", "https://www.cafci.org.ar/ficha-fondo.html?q=22;22", -1,-1,-1],
+    ["HF Acciones Argentinas", "https://www.cafci.org.ar/ficha-fondo.html?q=164;164", -1,-1,-1],
+    ["HF Acciones Lideres", "https://www.cafci.org.ar/ficha-fondo.html?q=29;29", -1,-1,-1],
+    ["Quinquela Acciones", "https://www.cafci.org.ar/ficha-fondo.html?q=378;1214", -1,-1,-1],
+    ["SBS Acciones Argentina", "https://www.cafci.org.ar/ficha-fondo.html?q=436;820", -1,-1,-1],
+    ["Rofex 20 Renta Variable", "https://www.cafci.org.ar/ficha-fondo.html?q=599;1216", -1,-1,-1],
+    ["FBA Acciones Argentinas", "https://www.cafci.org.ar/ficha-fondo.html?q=433;814", -1,-1,-1],
+    ["FBA Calificado", "https://www.cafci.org.ar/ficha-fondo.html?q=200;200", -1,-1,-1],
+    ["Pellegrini Acciones", "https://www.cafci.org.ar/ficha-fondo.html?q=118;118", -1,-1,-1],
+    ["Pionero Acciones", "https://www.cafci.org.ar/ficha-fondo.html?q=39;39", -1,-1,-1],
+    ["Toronto Trust Multimercado", "https://www.cafci.org.ar/ficha-fondo.html?q=561;1135", -1,-1,-1],
+    ["IAM Renta Variable", "https://www.cafci.org.ar/ficha-fondo.html?q=430;803", -1,-1,-1],
+    ["Allaria Acciones", "https://www.cafci.org.ar/ficha-fondo.html?q=441;835", -1,-1,-1],
+    ["Premier Renta Variable", "https://www.cafci.org.ar/ficha-fondo.html?q=227;227", -1,-1,-1],
 
-time = 8
-url_date = "https://www.cafci.org.ar/ficha-fondo.html?q=41;41"
+]
 
-driver.get(url_date)
-sleep(time/1.5)
-driver.find_element_by_class_name("html").click()
-sleep(time/1.5)
-driver.switch_to.window(driver.window_handles[1])
-sleep(time/1.5)
-   
-    
-html = driver.execute_script("return document.documentElement.outerHTML")
-sel_soup = BeautifulSoup(html, "html.parser")
-
-datos_crudos = sel_soup.findAll("p")
-datos_crudos = str(datos_crudos)
-
-posStart = datos_crudos.find("""<p class="encuentreColortxt ng-binding">1822 Raices Valores Negociables<br/>Composición de Cartera al """)
-tamañoStart = len("""<p class="encuentreColortxt ng-binding">1822 Raices Valores Negociables<br/>Composición de Cartera al""") 
-posEnd = datos_crudos.find(""" </p>, <p class="destacado ng-binding">ARS 1000</p>, <p class="destacado ng-binding">48 hs. hábiles</p>""")
-fecha = datos_crudos[posStart+tamañoStart:posEnd]
-
-print(fecha)
+print(fondos[0][1])
