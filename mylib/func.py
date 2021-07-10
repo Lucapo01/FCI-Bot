@@ -118,12 +118,62 @@ class FCI_Bot:
         try:
             YPF = float(YPF)
         except:
-            print("Error conversion a float getMirg")
+            print("Error conversion a float getYPF")
             YPF = -1
 
         self.driver.close()
         self.driver.switch_to.window(self.driver.window_handles[0])
         return (Patrimonio,YPF)
+
+    def _getDataV_(self,url):
+        self.driver.get(url)
+        sleep(self.time)
+        self.driver.find_element_by_class_name("html").click()
+        sleep(self.time)
+        self.driver.switch_to.window(self.driver.window_handles[1])
+        sleep(self.time)
+    
+        
+        html = self.driver.execute_script("return document.documentElement.outerHTML")
+        sel_soup = BeautifulSoup(html, "html.parser")
+
+        datos_crudos = sel_soup.findAll("tr")
+        datos_crudos = str(datos_crudos)
+
+
+        posStart = datos_crudos.find("""<!-- ngIf: row.tipo == 'pie' --><td class="ng-scope" ng-if="row.tipo == 'pie'"><strong class="ng-binding">""")
+        tamañoStart = len("""<!-- ngIf: row.tipo == 'pie' --><td class="ng-scope" ng-if="row.tipo == 'pie'"><strong class="ng-binding">""") 
+        posEnd = datos_crudos.find("""</strong></td><!-- end ngIf: row.tipo == 'pie'""")
+        Patrimonio = datos_crudos[posStart+tamañoStart:posEnd]
+        Patrimonio = Patrimonio.replace(",","")
+
+
+        if Patrimonio == "":
+            print("Error en string (getPatrimonio)")
+            return -1
+        
+        try:
+            Patrimonio = float(Patrimonio)
+
+        except:
+            print("Error en conversion a float (getPatrimonio)")
+            Patrimonio = -1
+            
+        posStart = datos_crudos.find("Cedear Vista Oil Gas")
+        VIS = datos_crudos[posStart+155:]
+
+        posEnd = VIS.find("<")
+        VIS = VIS[:posEnd]
+
+        try:
+            VIS = float(VIS)
+        except:
+            print("Error conversion a float getVis")
+            VIS = -1
+
+        self.driver.close()
+        self.driver.switch_to.window(self.driver.window_handles[0])
+        return (Patrimonio,VIS)
 
     def _loadParameters_(self,url):
 
@@ -157,7 +207,7 @@ class FCI_Bot:
             
 
             try:
-                self.choice = int(input("Ingrese\n 1 --> MIRG\n 2 --> YPF\n Su eleccion: "))
+                self.choice = int(input("Ingrese\n 1 --> MIRG\n 2 --> YPF\n 3 --> VIST\n Su eleccion: "))
                 self.COT = float(input("Ingrese la cotizacion del Activo en el periodo a analizar (999.99): "))
                 self.time = float(input("Ingrese la velocidad de funcionamiento, recomendable 8.0 (sg.ms): "))
                 break
@@ -177,14 +227,25 @@ class FCI_Bot:
             for item in range(len(self.fondos)):
                 outSheet.write(item+2, 0, self.fondos[item][0])
                 outSheet.write(item+2, 2, self.fondos[item][4])
-        
-
-        elif choice == 2:
+    
+        elif self.choice == 2:
             outWorkbook = xlsxwriter.Workbook("outYPF.xlsx")
             outSheet = outWorkbook.add_worksheet()
 
             outSheet.write("A2", "Fondos")
             outSheet.write("C2", "Cant. YPF")
+            outSheet.write("B1", self.fecha)
+
+            for item in range(len(self.fondos)):
+                outSheet.write(item+2, 0, self.fondos[item][0])
+                outSheet.write(item+2, 2, self.fondos[item][4])
+        
+        elif self.choice == 3:
+            outWorkbook = xlsxwriter.Workbook("outVist.xlsx")
+            outSheet = outWorkbook.add_worksheet()
+
+            outSheet.write("A2", "Fondos")
+            outSheet.write("C2", "Cant. Vist")
             outSheet.write("B1", self.fecha)
 
             for item in range(len(self.fondos)):

@@ -32,12 +32,15 @@ fondos = [
 
 ]
 
-url_date = "https://www.cafci.org.ar/ficha-fondo.html?q=41;41"
+#load parameters
+
 start_time = 15
 errores = [0,]
 
 FCI_Bot = FCI_Bot(fondos,start_time)
-FCI_Bot._loadParameters_(url_date)
+FCI_Bot._loadParameters_(fondos[0][1])
+
+#Scrapping Websites
 
 if FCI_Bot.choice == 1:
     for fondo in FCI_Bot.fondos:
@@ -47,29 +50,40 @@ elif FCI_Bot.choice == 2:
     for fondo in FCI_Bot.fondos:
         fondo[2],fondo[3] = FCI_Bot._getDataY_(fondo[1])
 
+elif FCI_Bot.choice == 3:
+    for fondo in FCI_Bot.fondos:
+        fondo[2],fondo[3] = FCI_Bot._getDataV_(fondo[1])
+
 else:
     print("Error en choice")
     exit()
 
 FCI_Bot.driver.close()
+ 
+# Data Math
 
 for fondo in FCI_Bot.fondos:
-    fondo[4] = int(((fondo[3]/100)*fondo[2]) / FCI_Bot.COT)
+
+    if fondo[3] > 0:
+        fondo[4] = int(((fondo[3]/100)*fondo[2]) / FCI_Bot.COT)
+    else:
+        fondo[4] = -1
 
 
-FCI_Bot._writeExcel_(fondos)
+FCI_Bot._writeExcel_()
 
-
+#error manager
 for fondo in FCI_Bot.fondos:
-    if -1 in fondo:
+    if fondo[3] < 0:
         errores[0] = errores[0] + 1
         errores.append(fondo[0])
 
+log_file = open("log.txt","w")
 if errores[0] == 0:
-    print("Sin errores")
+    log_file.write("Sin errores")
 
 else:
-    print("Hay {errores[0]} errores en los siguientes fondos: ")
-    for error in errores:
-        print(error)
+    log_file.write("Hay " + str(errores[0])+ " errores en los siguientes fondos: ")
+    errores.pop(0)
+    log_file.writelines(errores)
     
