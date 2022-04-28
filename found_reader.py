@@ -29,6 +29,15 @@ fondos = [
     ["IAM Renta Variable", "https://www.cafci.org.ar/ficha-fondo.html?q=430;803", -1,-1,-1],
     ["Allaria Acciones", "https://www.cafci.org.ar/ficha-fondo.html?q=441;835", -1,-1,-1],
     ["Premier Renta Variable", "https://www.cafci.org.ar/ficha-fondo.html?q=227;227", -1,-1,-1],
+    ["1810 Renta variable", "https://www.cafci.org.ar/ficha-fondo.html?q=275;275", -1,-1,-1],
+    ["Adcap"," https://www.cafci.org.ar/ficha-fondo.html?q=622;1255", -1,-1,-1],
+    ["Argenfunds", "https://www.cafci.org.ar/ficha-fondo.html?q=880;2544", -1,-1,-1],
+    ["Gainvest", "https://www.cafci.org.ar/ficha-fondo.html?q=510;1031", -1,-1,-1],
+    ["Goal", "https://www.cafci.org.ar/ficha-fondo.html?q=6;680", -1,-1,-1],
+    ["IEB","https://www.cafci.org.ar/ficha-fondo.html?q=890;2592", -1,-1,-1],
+    ["Megainver","https://www.cafci.org.ar/ficha-fondo.html?q=613;1237", -1,-1,-1],
+   
+    
 
 ]
 
