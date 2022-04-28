@@ -2664,3 +2664,20 @@ webdriverClickElement@chrome://marionette/content/interaction.js:179:31
 
 ###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
 
+1651177532699	geckodriver	INFO	Listening on 127.0.0.1:58934
+1651177535733	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\lucig\\AppData\\Local\\Temp\\rust_mozprofileASVwGL"
+1651177536639	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\lucig\\AppData\\Local\\Temp\\rust_mozprofileASVwGL\\search.json.mozlz4", (void 0)))
+1651177539402	Marionette	INFO	Listening on port 58965
+1651177539531	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1651177575326	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:235:19
+TimedPromise@chrome://remote/content/marionette/sync.js:220:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+1651178722029	geckodriver	INFO	Listening on 127.0.0.1:58437
+1651178725104	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\lucig\\AppData\\Local\\Temp\\rust_mozprofileavTLjT"
+1651178725846	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\lucig\\AppData\\Local\\Temp\\rust_mozprofileavTLjT\\search.json.mozlz4", (void 0)))
+1651178732249	Marionette	INFO	Listening on port 58449
+1651178732606	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
