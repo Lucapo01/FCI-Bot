@@ -45,7 +45,19 @@ fondos = [
     ["Goal", "https://www.cafci.org.ar/ficha-fondo.html?q=6;680", -1, -1, -1],
     ["IEB", "https://www.cafci.org.ar/ficha-fondo.html?q=890;2592", -1, -1, -1],
     ["Megainver", "https://www.cafci.org.ar/ficha-fondo.html?q=613;1237", -1, -1, -1],
-
+    ["CMA acciones"," https://www.cafci.org.ar/ficha-fondo.html?q=838;2383", -1, -1, -1],
+    ["Delta acciones","https://www.cafci.org.ar/ficha-fondo.html?q=370;661", -1, -1, -1],
+    ["Delta inter", "https://www.cafci.org.ar/ficha-fondo.html?q=420;773", -1, -1, -1],
+    ["Delta Latam", "https://www.cafci.org.ar/ficha-fondo.html?q=375;668", -1, -1, -1],
+    ["Delta Recursos", "https://www.cafci.org.ar/ficha-fondo.html?q=402;725", -1, -1, -1],
+    ["Delta Select", "https://www.cafci.org.ar/ficha-fondo.html?q=419;771", -1, -1, -1],
+    ["Lombardi", "https://www.cafci.org.ar/ficha-fondo.html?q=637;1294", -1, -1, -1],
+    ["MAF", "https://www.cafci.org.ar/ficha-fondo.html?q=505;2477", -1, -1, -1],
+    ["Superfondo ", "https://www.cafci.org.ar/ficha-fondo.html?q=148;148", -1, -1, -1],
+    ["Superfondo RV", "https://www.cafci.org.ar/ficha-fondo.html?q=142;1726", -1, -1, -1],
+    
+    
+    
 
 
 ]
