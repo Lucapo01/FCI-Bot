@@ -223,6 +223,59 @@ class FCI_Bot:
         self.driver.close()
         self.driver.switch_to.window(self.driver.window_handles[0])
         return (Patrimonio, CVH)
+    
+    def _getDataT_(self, url):
+        self.driver.get(url)
+        sleep(self.time)
+        self.driver.find_element_by_class_name("html").click()
+        sleep(self.time)
+        self.driver.switch_to.window(self.driver.window_handles[1])
+        sleep(self.time)
+
+        html = self.driver.execute_script(
+            "return document.documentElement.outerHTML")
+        sel_soup = BeautifulSoup(html, "html.parser")
+
+        datos_crudos = sel_soup.findAll("tr")
+        datos_crudos = str(datos_crudos)
+
+        posStart = datos_crudos.find(
+            """<!-- ngIf: row.tipo == 'pie' --><td class="ng-scope" ng-if="row.tipo == 'pie'"><strong class="ng-binding">""")
+        tamañoStart = len(
+            """<!-- ngIf: row.tipo == 'pie' --><td class="ng-scope" ng-if="row.tipo == 'pie'"><strong class="ng-binding">""")
+        posEnd = datos_crudos.find(
+            """</strong></td><!-- end ngIf: row.tipo == 'pie'""")
+        Patrimonio = datos_crudos[posStart+tamañoStart:posEnd]
+        Patrimonio = Patrimonio.replace(",", "")
+
+        if Patrimonio == "":
+            print("Error en string (getPatrimonio)")
+            return -1
+
+        try:
+            Patrimonio = float(Patrimonio)
+
+        except:
+            print("Error en conversion a float (getPatrimonio)")
+            Patrimonio = -1
+
+        posStart = datos_crudos.find("Transener - B")
+        TRAN = datos_crudos[posStart+148:]
+
+        posEnd = TRAN.find("<")
+        TRAN = TRAN[:posEnd]
+
+        print(TRAN)
+
+        try:
+            TRAN = float(TRAN)
+        except:
+            print("Error conversion a float getTrans")
+            TRAN = -1
+
+        self.driver.close()
+        self.driver.switch_to.window(self.driver.window_handles[0])
+        return (Patrimonio, TRAN)
 
     def _loadParameters_(self, url):
 
@@ -258,7 +311,7 @@ class FCI_Bot:
 
             try:
                 self.choice = int(input(
-                    "Ingrese\n 1 --> MIRG\n 2 --> YPF\n 3 --> VIST\n 4 --> CVH\n Su eleccion: "))
+                    "Ingrese\n 1 --> MIRG\n 2 --> YPF\n 3 --> VIST\n 4 --> CVH\n 5 --> TRAN\n Su eleccion: "))
                 self.COT = float(
                     input("Ingrese la cotizacion del Activo en el periodo a analizar (999.99): "))
                 self.time = float(
@@ -311,6 +364,18 @@ class FCI_Bot:
 
             outSheet.write("A2", "Fondos")
             outSheet.write("C2", "Cant. CVH")
+            outSheet.write("B1", self.fecha)
+
+            for item in range(len(self.fondos)):
+                outSheet.write(item+2, 0, self.fondos[item][0])
+                outSheet.write(item+2, 2, self.fondos[item][4])
+        
+        elif self.choice == 5:
+            outWorkbook = xlsxwriter.Workbook("outTRAN.xlsx")
+            outSheet = outWorkbook.add_worksheet()
+
+            outSheet.write("A2", "Fondos")
+            outSheet.write("C2", "Cant. TRAN")
             outSheet.write("B1", self.fecha)
 
             for item in range(len(self.fondos)):
