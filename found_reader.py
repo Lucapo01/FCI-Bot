@@ -76,6 +76,10 @@ elif FCI_Bot.choice == 4:
     for fondo in FCI_Bot.fondos:
         fondo[2], fondo[3] = FCI_Bot._getDataC_(fondo[1])
 
+elif FCI_Bot.choice == 5:
+    for fondo in FCI_Bot.fondos:
+        fondo[2], fondo[3] = FCI_Bot._getDataT_(fondo[1])
+
 else:
     print("Error en choice")
     exit()
